@@ -35,11 +35,37 @@ public class SysUserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String type = request.getParameter("handlerType");
-		System.out.println("请求参数handler是" + type);
-		String userName = request.getParameter("userName");
-		String password = request.getParameter("password");
+		//System.out.println("请求参数handler是" + type);
 
-		if ("loginIn".equals(type)) {
+		if("register".equals(type)) {
+			String userName = request.getParameter("userName");
+			String password = request.getParameter("password");
+			String realName = request.getParameter("realName");
+			String userType = request.getParameter("userType");
+			System.out.println(userType);
+			
+			if (userName != null && !"".equals(userName) && password != null && !"".equals(password)) {
+				SysUserDomain sysUser = new SysUserDomain();
+				sysUser.setUserName(userName);
+				sysUser.setPassword(MD5Util.MD5(password));
+				sysUser.setRealName(realName);
+				sysUser.setUserStatus(1);
+				if("管理员".equals(userType)) {
+					sysUser.setUserType(1);
+				}else {
+					sysUser.setUserType(2);
+				}
+				sysUser.setDataState(1);
+				
+				ISysUserService userService = new SysUserServiceImpl();
+				userService.registerSysUser(sysUser);
+				
+				response.sendRedirect(request.getContextPath() + "/view/login_admin.jsp");
+				
+			}
+		}else if ("loginIn".equals(type)) {
+			String userName = request.getParameter("userName");
+			String password = request.getParameter("password");
 			if (userName != null && !"".equals(userName) && password != null && !"".equals(password)) {
 				ISysUserService userService = new SysUserServiceImpl();
 				SysUserDomain sysUser = userService.querySysUser(userName, MD5Util.MD5(password));
@@ -51,12 +77,16 @@ public class SysUserServlet extends HttpServlet {
 					session.setAttribute(HospitalConstants.REAL_NAME_SESSION_KEY, sysUser.getRealName());
 					// 登录成功后转发到reservation_form页面
 					// 样式控制
-					request.setAttribute("title", "预约单");
-					request.setAttribute("activeCss", "yuyue");
-					// request.getRequestDispatcher("/view/reservation_form.jsp").forward(request,
-					// response);
-					System.out.println("登录成功！");
-					response.sendRedirect(request.getContextPath() + "/orderInfoServlet.do");
+					if(sysUser.getUserType()==1) {
+						request.setAttribute("title", "预约单");
+						request.setAttribute("activeCss", "yuyue");
+						// request.getRequestDispatcher("/view/reservation_form.jsp").forward(request,
+						// response);
+						System.out.println("登录成功！");
+						response.sendRedirect(request.getContextPath() + "/orderInfoServlet.do");
+					}else {
+						response.sendRedirect(request.getContextPath() + "/UserHopsitalServlet.do");
+					}
 				} else {
 					// 重定向
 					// request.getContextPath():就是hospital这个项目目录

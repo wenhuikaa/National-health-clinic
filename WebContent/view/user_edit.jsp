@@ -15,13 +15,6 @@
 					<div class="account_main_pad">
 						<form  name="userAddFrm" action="${ctx}/userServlet.do?handlerType=editorCommit" method="post">
 							<div class="input_group">
-								<label class="input_text">用户编码：</label>
-								<div class="input_control">
-									<input type="text" class="input_long"
-										name="sysUserCode" value=" ${ sessionScope.USER_CODE}" />
-								</div>
-							</div>
-							<div class="input_group">
 								<label class="input_text">用户名：</label>
 								<div class="input_control">
 									<input type="text" class="input_long"

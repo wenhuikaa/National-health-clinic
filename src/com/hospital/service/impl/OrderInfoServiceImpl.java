@@ -81,5 +81,11 @@ public class OrderInfoServiceImpl implements IOrderInfoService{
 		return orderInfoDao.queryOrderInfoById(orderId);
 	}
 
+	@Override
+	public Integer addOrderInfo(OrderInfoDomain orderInfoDomain) {
+		IOrderInfoDao orderInfoDao = new OrderInfoDaoImpl();
+		return orderInfoDao.addOrderInfo(orderInfoDomain);
+	}
+
 	
 }

@@ -19,4 +19,10 @@ public class CustomerServiceImpl implements ICustomerService{
 		return customerDao.queryCustomerList();
 	}
 
+	@Override
+	public Integer addCustomer(CustomerDomain customerDomain) {
+		ICustomerDao customerDao = new CustomerDaoImpl();
+		return customerDao.addCustomer(customerDomain);
+	}
+
 }

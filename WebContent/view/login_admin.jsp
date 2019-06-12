@@ -36,6 +36,7 @@
 						</div>
 					</form>
 				</div>
+				<p style="padding-left:2cm" onclick="toRegister()">还没有账号，先注册</p>
 			</div>
 		</div>
 	</body>
@@ -43,6 +44,11 @@
 	function loginFun(){
 		console.log("登录提交");
 		loginFrm.submit();
+	}
+	
+	//跳转注册页面
+	function toRegister(){
+		window.location.href = '${ctx}/view/register_admin.jsp';
 	}
 	</script>
 

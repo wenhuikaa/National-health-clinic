@@ -22,7 +22,8 @@ import com.hospital.constants.HospitalConstants;
 @WebFilter(filterName = "loginFilter", urlPatterns = { "*.jsp", "*.do" }, initParams = {
 		@WebInitParam(name = "encoding", value = "UTF-8"),
 		@WebInitParam(name = "loginJsp", value = "/view/login_admin.jsp"), // 登录的前台界面访问路径
-		@WebInitParam(name = "loginDo", value = "/userServlet.do")// 登录的后台访问路径
+		@WebInitParam(name = "registerJsp", value = "/view/register_admin.jsp"), // 注册的前台界面访问路径
+		@WebInitParam(name = "loginDo", value = "/userServlet.do")// 登录注册的后台访问路径
 })
 public class LoginFilter implements Filter {
 
@@ -38,6 +39,7 @@ public class LoginFilter implements Filter {
 			throws IOException, ServletException {
 		String encoding = filterConfig.getInitParameter("encoding");
 		String loginJsp = filterConfig.getInitParameter("loginJsp");
+		String registerJsp=filterConfig.getInitParameter("registerJsp");
 		String loginDo = filterConfig.getInitParameter("loginDo");
 
 		HttpServletRequest req = (HttpServletRequest) request;
@@ -51,7 +53,7 @@ public class LoginFilter implements Filter {
 		//如果用户想访问登录界面，应该是不需要拦截
 		String requestURI = req.getRequestURI();
 		//System.out.println("用户现在访问的界面：" + requestURI);
-		if (requestURI.contains(loginJsp) || requestURI.contains(loginDo)) {
+		if (requestURI.contains(loginJsp) || requestURI.contains(loginDo)||requestURI.contains(registerJsp)) {
 			// 想要去登录，不应该拦截
 			chain.doFilter(request, response);
 			return;

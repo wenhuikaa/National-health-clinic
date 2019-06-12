@@ -110,6 +110,25 @@ public class OrderInfoDaoImpl implements IOrderInfoDao{
 		 List<OrderInfoDomain> orderInfoResult= DBUtil.exeQuery(sql, OrderInfoDomain.class, orderId);
 		 return orderInfoResult;
 	}
+
+	@Override
+	public Integer addOrderInfo(OrderInfoDomain orderInfoDomain) {
+		String sql = "insert into order_info(ORDER_CODE,DOC_ID,CUST_ID,ORDER_TYPE,PRICE,ORDER_COUNT,TREAT_STATE,DATA_STATE) "
+				+ "values(?,?,?,?,?,?,?,?)";
+		List<Object> params = new ArrayList<>();
+		params.add(orderInfoDomain.getOrderCode());
+		params.add(orderInfoDomain.getDocId());
+		params.add(orderInfoDomain.getCustId());
+		params.add(orderInfoDomain.getOrderType());
+		params.add(orderInfoDomain.getPrice());
+		params.add(orderInfoDomain.getOrderCount());
+		params.add(orderInfoDomain.getTreatState());
+		params.add(orderInfoDomain.getDataState());
+		
+		Object[] array = params.toArray(new Object[params.size()]);
+		int index = DBUtil.exeUpdate(sql, array);
+		return index;
+	}
 	
 
 }

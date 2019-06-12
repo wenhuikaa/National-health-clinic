@@ -16,10 +16,10 @@ import com.hospital.service.IDoctorService;
 public class DoctorServiceImpl implements IDoctorService {
 
 	@Override
-	public List<DoctorDomain> queryDoctorList(String docName, String docTitle, PageDomain pageDomain) {
+	public List<DoctorDomain> queryDoctorList(String docName, String docTitle,String hosName, PageDomain pageDomain) {
 		IDoctorDao doctorDao = new DoctorDaoImpl();
 		// 总记录数
-		int totalCount = doctorDao.countDoctor(docName, docTitle);
+		int totalCount = doctorDao.countDoctor(docName, docTitle,hosName);
 		pageDomain.setTotalCount(totalCount);
 		int totalPage = pageDomain.getTotalPage();
 		// 分页算法
@@ -37,7 +37,7 @@ public class DoctorServiceImpl implements IDoctorService {
 		}
 		pageDomain.setCurrentPage(currentPage);
 		int startRow = (currentPage - 1) * pageCount;
-		List<DoctorDomain> doctorList = doctorDao.queryDoctorList(docName, docTitle, startRow, pageCount);
+		List<DoctorDomain> doctorList = doctorDao.queryDoctorList(docName, docTitle,hosName, startRow, pageCount);
 		return doctorList;
 	}
 
@@ -80,6 +80,18 @@ public class DoctorServiceImpl implements IDoctorService {
 	public List<DoctorDomain> getAllDoctors() {
 		IDoctorDao doctorDao = new DoctorDaoImpl();
 		return doctorDao.getAllDoctors();
+	}
+
+	@Override
+	public Integer updateHosSelected(String hosName) {
+		IDoctorDao doctorDao = new DoctorDaoImpl();
+		return doctorDao.updateHosSelected(hosName);
+	}
+
+	@Override
+	public HospitalDomain getHosSelected() {
+		IDoctorDao doctorDao = new DoctorDaoImpl();
+		return doctorDao.getHosSelected();
 	}
 
 }

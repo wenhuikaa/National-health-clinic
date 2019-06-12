@@ -14,4 +14,7 @@ public interface ISysUserDao {
 	
 	//编辑信息
 	Integer updateUser(SysUserDomain sysUserDomain);
+	
+	//注册用户
+	Integer registerSysUser(SysUserDomain sysUserDomain);
 }

@@ -31,4 +31,7 @@ public interface IOrderInfoDao {
   
   //修改就诊状态
   Integer updateTreatState(OrderInfoDomain orderInfoDomain);
+  
+  //添加预约信息
+  Integer addOrderInfo(OrderInfoDomain orderInfoDomain);
 }

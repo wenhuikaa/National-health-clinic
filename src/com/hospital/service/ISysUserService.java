@@ -12,4 +12,6 @@ public interface ISysUserService {
 	SysUserDomain querySysUser(String userName, String password);
 	
 	Integer updateUser(SysUserDomain sysUserDomain);
+	
+	Integer registerSysUser(SysUserDomain sysUserDomain);
 }

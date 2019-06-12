@@ -11,9 +11,9 @@ import com.hospital.model.HospitalDomain;
 
 public interface IDoctorDao {
 
-	List<DoctorDomain> queryDoctorList(String docName,String docTitle, int startRow , int pageRows);
+	List<DoctorDomain> queryDoctorList(String docName,String docTitle,String hosName, int startRow , int pageRows);
 	
-	int countDoctor(String docName,String docTitle);
+	int countDoctor(String docName,String docTitle,String hosName);
 	
 	//添加医师
 	int insertDoctor(DoctorDomain doctorDomain);
@@ -32,4 +32,10 @@ public interface IDoctorDao {
 	
 	//无条件查询医师列表
 	List<DoctorDomain> getAllDoctors();
+	
+	//将选中的医馆存入到临时表
+	Integer updateHosSelected(String hosName);
+	
+	//查询临时表中选中的医馆
+	HospitalDomain getHosSelected();
 }

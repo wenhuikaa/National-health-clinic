@@ -156,6 +156,7 @@ public class DoctorServlet extends HttpServlet {
 			IDoctorService doctorService = new DoctorServiceImpl();
 			String docName = req.getParameter("docName");
 			String docTitle = req.getParameter("docTitle");
+			String hosName=req.getParameter("hosName");
 			
 			// 页面传入的当前页
 			String currentPageStr = req.getParameter("currentPage");
@@ -181,7 +182,7 @@ public class DoctorServlet extends HttpServlet {
 			List<DepartmentDomain> depts = departmentService.queryAllDepartment();
 			req.setAttribute("depts", depts);
 			
-			List<DoctorDomain> doctorList = doctorService.queryDoctorList(docName, docTitle, pageDomain);
+			List<DoctorDomain> doctorList = doctorService.queryDoctorList(docName, docTitle,hosName, pageDomain);
 			pageDomain.setPageDoctor(doctorList);
 			req.setAttribute("pageDomain", pageDomain);
 

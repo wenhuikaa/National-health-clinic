@@ -27,6 +27,9 @@ public class PageDomain {
 	
 	private List<OrderInfoDomain> pageOrder;
 	
+	//选择的医馆
+	private String hosName;
+	
 	/**
 	 * 获取总页数
 	 * @return

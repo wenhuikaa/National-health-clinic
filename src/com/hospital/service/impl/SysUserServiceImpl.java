@@ -25,6 +25,12 @@ public class SysUserServiceImpl implements ISysUserService{
 		return userDao.updateUser(sysUserDomain);
 	}
 
+	@Override
+	public Integer registerSysUser(SysUserDomain sysUserDomain) {
+		ISysUserDao userDao=new SysUserDaoImpl();
+		return userDao.registerSysUser(sysUserDomain);
+	}
+
 
 
 }

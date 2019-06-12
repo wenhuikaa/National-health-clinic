@@ -39,4 +39,21 @@ public class SysUserDaoImpl implements ISysUserDao {
 		int index = DBUtil.exeUpdate(sql, array);
 		return index;
 	}
+
+	@Override
+	public Integer registerSysUser(SysUserDomain sysUserDomain) {
+		String sql = "insert into sys_user(USER_NAME,PASSWORD,REAL_NAME,USER_STATUS,USER_TYPE,DATA_STATE) "
+				+ "values(?,?,?,?,?,?)";
+		List<Object> params = new ArrayList<>();
+		params.add(sysUserDomain.getUserName());
+		params.add(sysUserDomain.getPassword());
+		params.add(sysUserDomain.getRealName());
+		params.add(sysUserDomain.getUserStatus());
+		params.add(sysUserDomain.getUserType());
+		params.add(sysUserDomain.getDataState());
+		
+		Object[] array = params.toArray(new Object[params.size()]);
+		int index = DBUtil.exeUpdate(sql, array);
+		return index;
+	}
 }

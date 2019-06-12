@@ -18,7 +18,7 @@
 				<a href=""> <img src="${ctx}/static/images/logo.png" />
 				</a>
 			</h1>
-			<span class="logo_text">健康国医管理后台</span>
+			<span class="logo_text">健康国医在线平台</span>
 			<div class="heder_right">
 				<a href="javascript:;" class=""  onclick="editor()"><i
 					class="iconfont icon-gerenzhongxin"></i> ${ sessionScope.USER_NAME}</a> <a href="javascript:;"

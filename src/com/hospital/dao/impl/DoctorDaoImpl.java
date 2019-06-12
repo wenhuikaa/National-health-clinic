@@ -12,54 +12,63 @@ import com.hospital.model.DoctorTitleDomain;
 import com.hospital.model.HospitalDomain;
 import com.hospital.util.DBUtil;
 
-public class DoctorDaoImpl implements IDoctorDao{
+public class DoctorDaoImpl implements IDoctorDao {
 
 	/**
-	 * 	查询医师列表 
+	 * 查询医师列表
 	 */
 	@Override
-	public List<DoctorDomain> queryDoctorList(String docName, String docTitle, int startRow , int pageRows) {
-		List<Object> params=new ArrayList<>();
-		String sql="select * from doctor where 1=1 and data_state=1";
-		if(docName!=null&&!"".equals(docName)) {
-			params.add("%"+docName+"%");
-			sql+=" and doc_name like ?";
+	public List<DoctorDomain> queryDoctorList(String docName, String docTitle, String hosName, int startRow,
+			int pageRows) {
+		List<Object> params = new ArrayList<>();
+		String sql = "select * from doctor where 1=1 and data_state=1";
+		if (docName != null && !"".equals(docName)) {
+			params.add("%" + docName + "%");
+			sql += " and doc_name like ?";
 		}
-		if(docTitle!=null&&!"".equals(docTitle)) {
-			params.add("%"+docTitle+"%");
-			sql+=" and doc_title like ?";
+		if (docTitle != null && !"".equals(docTitle)) {
+			params.add("%" + docTitle + "%");
+			sql += " and doc_title like ?";
 		}
-		
-		if( pageRows > 0) {
-			//分页
-			sql+= " limit ? , ?";
+		if (hosName != null && !"".equals(hosName)) {
+			params.add("%" + hosName + "%");
+			sql += " and hos_name like ?";
+		}
+
+		if (pageRows > 0) {
+			// 分页
+			sql += " limit ? , ?";
 			params.add(startRow);
 			params.add(pageRows);
 		}
-		//将集合转为数组
-		Object[] array=params.toArray(new Object[params.size()]);
-		List<DoctorDomain> doctorResult=DBUtil.exeQuery(sql, DoctorDomain.class, array);
+		// 将集合转为数组
+		Object[] array = params.toArray(new Object[params.size()]);
+		List<DoctorDomain> doctorResult = DBUtil.exeQuery(sql, DoctorDomain.class, array);
 		return doctorResult;
 	}
 
 	@Override
-	public int countDoctor(String docName, String docTitle) {
+	public int countDoctor(String docName, String docTitle, String hosName) {
 		List<Object> params = new ArrayList<>();
 		String sql = "select * from doctor where 1 = 1 and data_state = 1";
-		if(docName != null && !"".equals(docName)) {
+		if (docName != null && !"".equals(docName)) {
 			params.add("%" + docName + "%");
 			sql += " and doc_name like ? ";
 		}
-		
-		if(docTitle != null && !"".equals(docTitle)) {
+
+		if (docTitle != null && !"".equals(docTitle)) {
 			params.add("%" + docTitle + "%");
 			sql += " and doc_title like ? ";
 		}
-		
-		//将集合转换成数组
+		if (hosName != null && !"".equals(hosName)) {
+			params.add("%" + hosName + "%");
+			sql += " and hos_name like ?";
+		}
+
+		// 将集合转换成数组
 		Object[] array = params.toArray(new Object[params.size()]);
-		List<DoctorDomain> doctorResult = DBUtil.exeQuery(sql, DoctorDomain.class , array);
-		if(doctorResult != null) {
+		List<DoctorDomain> doctorResult = DBUtil.exeQuery(sql, DoctorDomain.class, array);
+		if (doctorResult != null) {
 			return doctorResult.size();
 		}
 		return 0;
@@ -67,8 +76,9 @@ public class DoctorDaoImpl implements IDoctorDao{
 
 	@Override
 	public int insertDoctor(DoctorDomain doctorDomain) {
-		String sql="insert into doctor(DOC_NAME,DOC_TITLE,HOS_NAME,DEPT_NAME,EXPERT_DESC,ORDER_PRICE,MEMO,DATA_STATE)"+"value(?,?,?,?,?,?,?,?)";
-		List<Object> params=new ArrayList<>();
+		String sql = "insert into doctor(DOC_NAME,DOC_TITLE,HOS_NAME,DEPT_NAME,EXPERT_DESC,ORDER_PRICE,MEMO,DATA_STATE)"
+				+ "value(?,?,?,?,?,?,?,?)";
+		List<Object> params = new ArrayList<>();
 		params.add(doctorDomain.getDocName());
 		params.add(doctorDomain.getDocTitle());
 		params.add(doctorDomain.getHosName());
@@ -77,23 +87,23 @@ public class DoctorDaoImpl implements IDoctorDao{
 		params.add(doctorDomain.getOrderPrice());
 		params.add(doctorDomain.getMemo());
 		params.add(doctorDomain.getDataState());
-		
-		//集合转为数组
-		Object[] array=params.toArray(new Object[params.size()]);
-		//index:更新的行数
-		int index=DBUtil.exeUpdate(sql, array);
+
+		// 集合转为数组
+		Object[] array = params.toArray(new Object[params.size()]);
+		// index:更新的行数
+		int index = DBUtil.exeUpdate(sql, array);
 		return index;
 	}
 
 	@Override
 	public List<DoctorTitleDomain> queryDoctorTitleList() {
-		String sql="select * from doc_title where 1=1";
-		return DBUtil.exeQuery(sql,DoctorTitleDomain.class);
+		String sql = "select * from doc_title where 1=1";
+		return DBUtil.exeQuery(sql, DoctorTitleDomain.class);
 	}
 
 	@Override
 	public Integer deleteDoctor(Integer docId) {
-		//逻辑性删除，非物理性删除
+		// 逻辑性删除，非物理性删除
 		String sql = "update doctor set data_state = -1 where doc_id = ?";
 		int index = DBUtil.exeUpdate(sql, docId);
 		return index;
@@ -101,9 +111,9 @@ public class DoctorDaoImpl implements IDoctorDao{
 
 	@Override
 	public DoctorDomain getDoctor(Integer docId) {
-		String sql="select * from doctor where 1=1 and doc_id=?";
-		List<DoctorDomain> docResult  = DBUtil.exeQuery(sql, DoctorDomain.class, docId);
-		if(docResult != null && docResult.size() > 0) {
+		String sql = "select * from doctor where 1=1 and doc_id=?";
+		List<DoctorDomain> docResult = DBUtil.exeQuery(sql, DoctorDomain.class, docId);
+		if (docResult != null && docResult.size() > 0) {
 			return docResult.get(0);
 		}
 		return null;
@@ -129,9 +139,31 @@ public class DoctorDaoImpl implements IDoctorDao{
 
 	@Override
 	public List<DoctorDomain> getAllDoctors() {
-		String sql="select * from doctor where 1=1";
+		String sql = "select * from doctor where 1=1";
 		List<DoctorDomain> doctors = DBUtil.exeQuery(sql, DoctorDomain.class);
 		return doctors;
+	}
+
+	@Override
+	public Integer updateHosSelected(String hosName) {
+		String sql = "update hos_temp set HOS_SELECTED=?";
+		int index = DBUtil.exeUpdate(sql, hosName);
+		if (index > 0) {
+			System.out.println("添加到临时表成功！");
+		} else {
+			System.out.println("添加到临时表失败！");
+		}
+		return index;
+	}
+
+	@Override
+	public HospitalDomain getHosSelected() {
+		String sql = "select * from hos_temp";
+		List<HospitalDomain> hosResult = DBUtil.exeQuery(sql, HospitalDomain.class);
+		if (hosResult != null && hosResult.size() > 0) {
+			return hosResult.get(0);
+		}
+		return null;
 	}
 
 }

@@ -31,4 +31,6 @@ public interface IOrderInfoService {
 	 Integer updateTreatState(OrderInfoDomain orderInfoDomain);
 	
 	 List<OrderInfoDomain> queryOrderInfoById(Integer orderId);
+	 
+	 Integer addOrderInfo(OrderInfoDomain orderInfoDomain);
 }

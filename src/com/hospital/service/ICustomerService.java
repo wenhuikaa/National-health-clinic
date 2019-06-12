@@ -10,4 +10,6 @@ import com.hospital.model.CustomerDomain;
 public interface ICustomerService {
 	
 	List<CustomerDomain> queryCustomerList();
+	
+	Integer addCustomer(CustomerDomain customerDomain);
 }

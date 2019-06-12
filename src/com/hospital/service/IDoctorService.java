@@ -12,7 +12,7 @@ import com.hospital.model.PageDomain;
 
 public interface IDoctorService {
 	
-	 List<DoctorDomain> queryDoctorList(String docName, String docTitle,PageDomain pageDomain);
+	 List<DoctorDomain> queryDoctorList(String docName, String docTitle,String hosName,PageDomain pageDomain);
 	
 	 //判断添加医师是否成功
 	 Boolean addDoctor(DoctorDomain doctorDomain);
@@ -31,4 +31,8 @@ public interface IDoctorService {
 	
 	//无条件查询医师列表
 	List<DoctorDomain> getAllDoctors();
+	
+	Integer updateHosSelected(String hosName);
+	
+	HospitalDomain getHosSelected();
 }
