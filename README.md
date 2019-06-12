@@ -1,5 +1,5 @@
 # National-health-clinic
-基于JavaWeb分层架构的一个医馆后台管理系统
+基于JavaWeb分层架构的一个医馆在线平台系统
 
 功能描述
 
